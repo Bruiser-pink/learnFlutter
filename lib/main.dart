@@ -1,63 +1,82 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MycountWidget extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MycountState();
-  }
+main(List<String> args) {
+  runApp(MyAPP());
 }
 
-class MycountState extends State<MycountWidget> {
-  int count = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-       children: <Widget>[
-         Row(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: <Widget>[
-             RaisedButton(
-               color: Colors.redAccent,
-               child: Text("+1", style: TextStyle(fontSize: 18, color: Colors.white),),
-               onPressed: () {
-                 setState(() {
-                   count++;
-                 });
-               },
-             ),
-             RaisedButton(
-               color: Colors.orangeAccent,
-               child: Text("-1", style: TextStyle(fontSize: 18, color: Colors.white),),
-               onPressed: () {
-                 setState(() {
-                   count--;
-                 });
-               },
-             )
-           ],
-         ),
-         Text('当前计数$count', style: TextStyle(fontSize: 30),),
-       ]
-    );
-  }
-}
-
-//自定义widget
-class MyAPP extends StatelessWidget{
+class MyAPP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Hello world',
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('Home'),
-          ),
-          body: MycountWidget()
+        appBar: AppBar(
+          title: Text('我是标题'),
+        ),
+        body: ContentWidget(),
       ),
     );
   }
 }
 
-main(List<String> args) {
-  runApp(MyAPP());
+class ContentWidget extends StatefulWidget {
+  //生命周期函数尝
+  ContentWidget() {
+    print('1: StatefulWidget constructors is running');
+  }
+  @override
+  State<StatefulWidget> createState() {
+    print("2: createState is running");
+    return ContentStateWidget();
+  }
+}
+
+class ContentStateWidget extends State<ContentWidget> {
+  int counter = 0;
+  ContentStateWidget() {
+    print("3: State Constructors is running");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("4: initState is running");
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print("didChangeDependencies is running");
+  }
+
+  @override
+  void didUpdateWidget(covariant ContentWidget oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateWidget is running");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("5: State build is running");
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("hello world $counter", style: TextStyle(fontSize: 30),),
+          RaisedButton(
+            color: Colors.orangeAccent,
+            child: Text("counter+1", style: TextStyle(fontSize: 18, color: Colors.white),),
+            onPressed: () {
+              setState(() {
+                counter++;
+              });
+            },
+          )
+        ],
+      )
+    );
+  }
 }
